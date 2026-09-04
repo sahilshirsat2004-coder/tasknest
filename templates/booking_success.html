@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto my-16 bg-white border border-slate-200 rounded-3xl p-8 text-center shadow-lg shadow-slate-100">
+    <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">
+        <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <h2 class="text-2xl font-extrabold text-slate-900 mb-1">Order #{{ booking_id }} Confirmed!</h2>
+    <p class="text-slate-500 text-xs mb-6">A service professional has been assigned to your request.</p>
+
+    <div class="bg-slate-50 border border-slate-100 rounded-xl p-4 text-left space-y-2 mb-6 text-xs">
+        <div class="flex justify-between"><span class="text-slate-400">Customer:</span> <span class="font-bold text-slate-800">{{ name }}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Service:</span> <span class="font-bold text-slate-800">{{ service }}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Scheduled:</span> <span class="font-bold text-slate-800">{{ time }}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Payment Method:</span> <span class="font-bold text-slate-800 uppercase">{{ pay_method }}</span></div>
+        <div class="flex justify-between border-t pt-2">
+            <span class="text-slate-500 font-bold">Total: ₹{{ price }}</span>
+            <span class="font-bold px-2 py-0.5 rounded text-[11px] {% if 'Paid' in pay_status %} bg-emerald-100 text-emerald-700 {% else %} bg-amber-100 text-amber-700 {% endif %}">
+                {{ pay_status }}
+            </span>
+        </div>
+    </div>
+
+    <div class="space-y-2">
+        <a href="/services" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3 rounded-xl transition shadow-md shadow-indigo-100">Book Another Service</a>
+        <a href="/" class="block text-xs font-bold text-slate-600 hover:underline py-2">Return Home</a>
+    </div>
+</div>
+{% endblock %}

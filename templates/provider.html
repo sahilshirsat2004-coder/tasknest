@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-6 py-10">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Pending Dispatches</span>
+            <div class="text-3xl font-extrabold text-amber-500 mt-2">{{ pending }}</div>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Completed Revenue</span>
+            <div class="text-3xl font-extrabold text-emerald-600 mt-2">₹{{ revenue }}</div>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Database Status</span>
+            <div class="text-3xl font-extrabold text-indigo-600 mt-2">SQLite Active</div>
+        </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+            <h3 class="font-extrabold text-slate-900 text-base">Service Dispatch Pipeline</h3>
+            <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-3 py-1 rounded-full border border-indigo-100">{{ bookings|length }} Total Work Orders</span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase tracking-wider font-semibold">
+                    <tr>
+                        <th class="py-3 px-4">Order ID</th>
+                        <th class="py-3 px-4">Customer</th>
+                        <th class="py-3 px-4">Service & Specialist</th>
+                        <th class="py-3 px-4">Type</th>
+                        <th class="py-3 px-4">Slot & Location</th>
+                        <th class="py-3 px-4">Rate & Payment</th>
+                        <th class="py-3 px-4">Status</th>
+                        <th class="py-3 px-4 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    {% for b in bookings %}
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-4 px-4 font-extrabold text-slate-400">#{{ b.id }}</td>
+                        <td class="py-4 px-4">
+                            <span class="font-bold text-slate-800 block text-sm">{{ b.customer_name }}</span>
+                            <span class="text-slate-500 text-[11px]">{{ b.phone }}</span>
+                        </td>
+                        <td class="py-4 px-4">
+                            <span class="font-semibold text-slate-800 block">{{ b.service_title }}</span>
+                            <span class="text-indigo-600 text-[11px] font-bold">{{ b.specialist_name }}</span>
+                        </td>
+                        <td class="py-4 px-4">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold {% if b.service_type == 'Home Visit' %} bg-blue-50 text-blue-700 {% else %} bg-purple-50 text-purple-700 {% endif %}">
+                                {{ b.service_type }}
+                            </span>
+                        </td>
+                        <td class="py-4 px-4">
+                            <div class="font-semibold text-slate-700">{{ b.date_time }}</div>
+                            <div class="text-slate-400 text-[11px]">{{ b.address }}</div>
+                        </td>
+                        <td class="py-4 px-4">
+                            <div class="font-black text-slate-900">₹{{ b.total_price }}</div>
+                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded {% if 'Paid' in b.payment_status %} bg-emerald-50 text-emerald-600 {% else %} bg-amber-50 text-amber-600 {% endif %}">
+                                {{ b.payment_method }} • {{ b.payment_status }}
+                            </span>
+                        </td>
+                        <td class="py-4 px-4">
+                            {% if b.status == 'Pending' %}
+                            <span class="bg-amber-50 text-amber-600 font-bold px-2 py-1 rounded text-[11px] border border-amber-200">Pending</span>
+                            {% elif b.status == 'Accepted' %}
+                            <span class="bg-indigo-50 text-indigo-600 font-bold px-2 py-1 rounded text-[11px] border border-indigo-200">En Route</span>
+                            {% elif b.status == 'Completed' %}
+                            <span class="bg-emerald-50 text-emerald-600 font-bold px-2 py-1 rounded text-[11px] border border-emerald-200">Completed</span>
+                            {% else %}
+                            <span class="bg-rose-50 text-rose-600 font-bold px-2 py-1 rounded text-[11px] border border-rose-200">Cancelled</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-4 px-4 text-center space-x-1 whitespace-nowrap">
+                            {% if b.status == 'Pending' %}
+                            <a href="/update-status/{{ b.id }}/Accepted" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg text-[11px]">Accept</a>
+                            <a href="/update-status/{{ b.id }}/Cancelled" class="bg-slate-100 hover:bg-slate-200 text-rose-600 font-bold px-3 py-1.5 rounded-lg text-[11px]">Decline</a>
+                            {% elif b.status == 'Accepted' %}
+                            <a href="/update-status/{{ b.id }}/Completed" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-[11px]">Mark Finished</a>
+                            {% else %}
+                            <span class="text-slate-300 text-[11px]">Archived</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="8" class="text-center py-12 text-slate-400">No active bookings registered in the database yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

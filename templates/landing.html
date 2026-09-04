@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="relative overflow-hidden bg-white">
+    <div class="max-w-7xl mx-auto px-6 pt-16 pb-20 text-center lg:pt-24 lg:pb-28">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-wider mb-6">
+            <i class="fa-solid fa-bolt text-[11px]"></i> Next-Gen On-Demand Home Care
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight max-w-4xl mx-auto leading-tight sm:leading-tight">
+            Certified Experts at Your Doorstep, <span class="text-indigo-600">Whenever You Need.</span>
+        </h1>
+
+        <p class="mt-6 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            TaskNest connects homeowners directly with verified physicians, electricians, plumbers, massage therapists, and mechanics. One unified portal for all essential domestic services.
+        </p>
+
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/register" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-lg shadow-indigo-200 transition transform hover:-translate-y-0.5">
+                Get Started — Register Now
+            </a>
+            <a href="/login" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm transition">
+                Sign In to Account
+            </a>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 pb-24">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-8 hover:shadow-md transition">
+                <div class="w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow-md shadow-indigo-100">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">100% Verified Specialists</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Choose doctors, technicians, and therapists based on real qualifications, verified experience, and user ratings.
+                </p>
+            </div>
+
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-8 hover:shadow-md transition">
+                <div class="w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow-md shadow-indigo-100">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Transparent Pricing</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Zero surprise costs. Instant pricing overview with instant UPI payment or pay-after-service fulfillment.
+                </p>
+            </div>
+
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-8 hover:shadow-md transition">
+                <div class="w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow-md shadow-indigo-100">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Dual Dispatch System</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Choose on-site doorstep visits or schedule remote consultations for wellness guidance, medical opinions, and tutorials.
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-20 border-t border-slate-200 pt-16 text-center">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-12">How TaskNest Operates</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 text-left">
+                <div class="bg-white border rounded-xl p-5 shadow-sm">
+                    <span class="text-xs font-black text-indigo-600 bg-indigo-50 px-2 py-1 rounded">STEP 01</span>
+                    <h4 class="font-bold text-slate-800 mt-3 mb-1">Create Account</h4>
+                    <p class="text-xs text-slate-500">Sign up as a customer or register as a certified service professional.</p>
+                </div>
+                <div class="bg-white border rounded-xl p-5 shadow-sm">
+                    <span class="text-xs font-black text-indigo-600 bg-indigo-50 px-2 py-1 rounded">STEP 02</span>
+                    <h4 class="font-bold text-slate-800 mt-3 mb-1">Select Specialist</h4>
+                    <p class="text-xs text-slate-500">Browse doctors and technicians, check ratings, and choose who you want.</p>
+                </div>
+                <div class="bg-white border rounded-xl p-5 shadow-sm">
+                    <span class="text-xs font-black text-indigo-600 bg-indigo-50 px-2 py-1 rounded">STEP 03</span>
+                    <h4 class="font-bold text-slate-800 mt-3 mb-1">Schedule & Pay</h4>
+                    <p class="text-xs text-slate-500">Pick appointment date, select payment via UPI/QR or Pay After Service.</p>
+                </div>
+                <div class="bg-white border rounded-xl p-5 shadow-sm">
+                    <span class="text-xs font-black text-indigo-600 bg-indigo-50 px-2 py-1 rounded">STEP 04</span>
+                    <h4 class="font-bold text-slate-800 mt-3 mb-1">Service Delivered</h4>
+                    <p class="text-xs text-slate-500">Track dispatch in real-time until the job is marked complete.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

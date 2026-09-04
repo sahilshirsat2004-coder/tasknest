@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-4xl mx-auto px-6 py-12">
+    <div class="text-center mb-8">
+        <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1 rounded-full">Step 2 of 2</span>
+        <h1 class="text-3xl font-black text-slate-900 mt-2">Secure Checkout</h1>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white border rounded-2xl p-6 shadow-sm h-fit">
+            <h3 class="text-base font-bold text-slate-800 border-b pb-3 mb-4">Order Summary</h3>
+            <div class="space-y-3 text-xs">
+                <div class="flex justify-between"><span class="text-slate-500">Service:</span><span class="font-bold text-slate-800">{{ order.service }}</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Specialist:</span><span class="font-bold text-indigo-600">{{ order.specialist }}</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Type:</span><span class="font-semibold text-slate-700">{{ order.service_type }}</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Scheduled:</span><span class="font-semibold text-slate-700">{{ order.datetime }}</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Address:</span><span class="font-semibold text-slate-700 text-right max-w-[150px] truncate">{{ order.address }}</span></div>
+                
+                <div class="border-t pt-3 flex justify-between items-center text-sm font-black text-slate-900">
+                    <span>Total Payable:</span>
+                    <span class="text-indigo-600 text-lg">₹{{ order.price }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:col-span-2 bg-white border rounded-2xl p-6 shadow-sm">
+            <h3 class="text-base font-bold text-slate-800 mb-4">Select Payment Option</h3>
+
+            <form action="/process-payment" method="POST" id="payForm" class="space-y-6">
+                <div class="grid grid-cols-3 gap-3">
+                    <label onclick="switchTab('upi')" class="border rounded-xl p-3 flex flex-col items-center gap-2 cursor-pointer hover:border-indigo-500 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/40">
+                        <input type="radio" name="payment_method" value="UPI" checked class="accent-indigo-600">
+                        <i class="fa-solid fa-qrcode text-indigo-600 text-lg"></i>
+                        <span class="text-xs font-bold">UPI / QR</span>
+                    </label>
+
+                    <label onclick="switchTab('card')" class="border rounded-xl p-3 flex flex-col items-center gap-2 cursor-pointer hover:border-indigo-500 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/40">
+                        <input type="radio" name="payment_method" value="CARD" class="accent-indigo-600">
+                        <i class="fa-solid fa-credit-card text-indigo-600 text-lg"></i>
+                        <span class="text-xs font-bold">Card / NetBanking</span>
+                    </label>
+
+                    <label onclick="switchTab('cod')" class="border rounded-xl p-3 flex flex-col items-center gap-2 cursor-pointer hover:border-indigo-500 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/40">
+                        <input type="radio" name="payment_method" value="COD" class="accent-indigo-600">
+                        <i class="fa-solid fa-handshake text-indigo-600 text-lg"></i>
+                        <span class="text-xs font-bold">Pay After Service</span>
+                    </label>
+                </div>
+
+                <div id="upiTab" class="border border-slate-100 bg-slate-50/60 rounded-xl p-5 text-center">
+                    <p class="text-xs text-slate-600 mb-3 font-semibold">Scan QR using GPay, PhonePe, or Paytm</p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=demo@upi&pn=TaskNest&am={{ order.price }}&cu=INR" 
+                         alt="UPI QR Code" 
+                         class="mx-auto rounded-lg shadow-sm border p-2 bg-white">
+                    <p class="text-[11px] text-slate-400 mt-2">Amount auto-filled: ₹{{ order.price }}</p>
+                </div>
+
+                <div id="cardTab" class="border border-slate-100 bg-slate-50/60 rounded-xl p-5 space-y-3 hidden">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Card Number</label>
+                        <input type="text" placeholder="4111 •••• •••• 1111" class="w-full bg-white border rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">Expiry</label>
+                            <input type="text" placeholder="MM/YY" class="w-full bg-white border rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">CVV</label>
+                            <input type="password" placeholder="•••" class="w-full bg-white border rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="codTab" class="border border-slate-100 bg-slate-50/60 rounded-xl p-5 text-center hidden">
+                    <i class="fa-solid fa-circle-info text-indigo-600 text-xl mb-2"></i>
+                    <p class="text-xs font-bold text-slate-800">No advance payment required</p>
+                    <p class="text-xs text-slate-500 mt-1">Pay ₹{{ order.price }} directly to your assigned technician via Cash or UPI once the work is completed.</p>
+                </div>
+
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-md shadow-indigo-100 text-sm transition">
+                    Complete & Confirm Booking
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function switchTab(type) {
+    document.getElementById('upiTab').classList.add('hidden');
+    document.getElementById('cardTab').classList.add('hidden');
+    document.getElementById('codTab').classList.add('hidden');
+
+    if (type === 'upi') document.getElementById('upiTab').classList.remove('hidden');
+    if (type === 'card') document.getElementById('cardTab').classList.remove('hidden');
+    if (type === 'cod') document.getElementById('codTab').classList.remove('hidden');
+}
+</script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto my-14 bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+    <div class="text-center mb-6">
+        <h2 class="text-2xl font-extrabold text-slate-900">Sign In to TaskNest</h2>
+        <p class="text-xs text-slate-500 mt-1">Access your customer bookings or provider console</p>
+    </div>
+
+    <form action="/login" method="POST" class="space-y-4">
+        <div>
+            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Email Address</label>
+            <input type="email" name="email" required placeholder="name@example.com" class="w-full border rounded-lg px-3 py-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none bg-slate-50">
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Password</label>
+            <input type="password" name="password" required placeholder="••••••••" class="w-full border rounded-lg px-3 py-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none bg-slate-50">
+        </div>
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-lg text-xs transition shadow-md shadow-indigo-100">
+            Sign In
+        </button>
+    </form>
+
+    <p class="text-center text-xs text-slate-500 mt-6">
+        Don't have an account yet? 
+        <a href="/register" class="text-indigo-600 font-bold hover:underline">Register here</a>
+    </p>
+</div>
+{% endblock %}
